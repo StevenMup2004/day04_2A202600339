@@ -1,4 +1,4 @@
-# KẾT QUẢ TEST CAES - LAB 4
+# KẾT QUẢ TEST CASE - LAB 4
 
 ## Test 1 - Direct Answer (Không cần tool)
 **User:** `Xin chào! Tôi đang muốn đi du lịch nhưng chưa biết đi đâu.`
