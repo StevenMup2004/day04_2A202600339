@@ -34,9 +34,17 @@ def agent_node(state: AgentState):
     # === LOGGING KẾT QUẢ TOOL ===
     # Nếu tin nhắn cuối cùng là từ tool (tức là node 'tools' vừa chạy xong và truyền lại cho 'agent')
     if messages and messages[-1].type == "tool":
-        tool_name = messages[-1].name
-        tool_result = messages[-1].content
-        print(f"[LOG] Kết quả trả về từ tool [{tool_name}]:\n{tool_result}\n" + "-"*40)
+        # Xử lý trường hợp LLM gọi song song nhiều tool (ví dụ: vừa search_flights vừa search_hotels)
+        tool_messages = []
+        for msg in reversed(messages):
+            if msg.type == "tool":
+                tool_messages.append(msg)
+            else:
+                break
+                
+        # In kết quả theo thứ tự từ trên xuống
+        for msg in reversed(tool_messages):
+            print(f"[LOG] Kết quả trả về từ tool [{msg.name}]:\n{msg.content}\n" + "-"*40)
         
     response = llm_with_tools.invoke(messages)
     
